@@ -40,6 +40,9 @@ class DataSeries
     const STYLE_MARKER = 'marker';
     const STYLE_FILLED = 'filled';
 
+    const VALUE_AXIS_POSITION_LEFT  = 'l';
+    const VALUE_AXIS_POSITION_RIGHT = 'r';
+
     const EMPTY_AS_GAP = 'gap';
     const EMPTY_AS_ZERO = 'zero';
     const EMPTY_AS_SPAN = 'span';
@@ -108,6 +111,11 @@ class DataSeries
     private $plotValues = [];
 
     /**
+     * @var string
+     */
+    private $valueAxisPosition;
+
+    /**
      * Plot Bubble Sizes.
      *
      * @var DataSeriesValues[]
@@ -127,7 +135,7 @@ class DataSeries
      * @param bool $smoothLine
      * @param null|string $plotStyle
      */
-    public function __construct($plotType = null, $plotGrouping = null, array $plotOrder = [], array $plotLabel = [], array $plotCategory = [], array $plotValues = [], $plotDirection = null, $smoothLine = false, $plotStyle = null)
+    public function __construct($plotType = null, $plotGrouping = null, array $plotOrder = [], array $plotLabel = [], array $plotCategory = [], array $plotValues = [], $plotDirection = null, $smoothLine = false, $plotStyle = null, $valueAxisPosition = null)
     {
         $this->plotType = $plotType;
         $this->plotGrouping = $plotGrouping;
@@ -151,6 +159,13 @@ class DataSeries
             $plotDirection = self::DIRECTION_COL;
         }
         $this->plotDirection = $plotDirection;
+
+        if ($valueAxisPosition === null) {
+            $this->valueAxisPosition = self::VALUE_AXIS_POSITION_LEFT;
+        }
+        else {
+            $this->valueAxisPosition = $valueAxisPosition;
+        }
     }
 
     /**
@@ -385,6 +400,16 @@ class DataSeries
     }
 
     /**
+     * Get Value Axis Position.
+     *
+     * @return string
+     */
+    public function getValueAxisPosition()
+    {
+        return $this->valueAxisPosition;
+    }
+
+    /**
      * Set Smooth Line.
      *
      * @param bool $smoothLine
@@ -394,6 +419,20 @@ class DataSeries
     public function setSmoothLine($smoothLine)
     {
         $this->smoothLine = $smoothLine;
+
+        return $this;
+    }
+
+    /**
+     * Set Value Axis Position.
+     * 
+     * @param string $valueAxisPosition
+     *
+     * @return string
+     */
+    public function setValueAxisPosition($valueAxisPosition)
+    {
+        $this->valueAxisPosition = $valueAxisPosition;
 
         return $this;
     }
